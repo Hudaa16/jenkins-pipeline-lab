@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+    }
     environment {
         VERSION = '1.0.0'
         BUILD_NUMBER = "${env.BUILD_ID}"
@@ -13,6 +16,7 @@ pipeline {
                 echo "Building version: ${VERSION}"
                 echo "Build number: ${BUILD_NUMBER}"
                 echo 'Building..'
+                bat 'mvn -version'
             }
         }
         stage('Test') {
