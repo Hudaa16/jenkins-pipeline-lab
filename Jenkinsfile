@@ -4,6 +4,9 @@ pipeline {
         VERSION = '1.0.0'
         BUILD_NUMBER = "${env.BUILD_ID}"
     }
+    parameters {
+        booleanParam(name: 'executeTests', defaultValue: true, description: 'Execute test stage?')
+    }
     stages {
         stage('Build') {
             steps {
@@ -13,9 +16,12 @@ pipeline {
             }
         }
         stage('Test') {
+            when {
+                expression { params.executeTests == true }
+            }
             steps {
                 echo "Testing version: ${VERSION}"
-                echo 'Testing..'
+                echo 'Testing with conditions..'
             }
         }
         stage('Deploy') {
